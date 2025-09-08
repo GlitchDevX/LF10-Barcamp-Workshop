@@ -1,36 +1,63 @@
-from typing import Literal
+from abc import ABC, abstractmethod
+from datetime import date
 
 
-type Food = Literal["meat", "vegetables", "fish food", "seeds"]
+class Item(ABC):
+    @abstractmethod
+    def get_discounted_price(self) -> float:
+        pass
 
-class Cat:
-    def feed(self, food: Food):
-        if food == "meat":
-            print("cat ate the food 😺")
+    @abstractmethod
+    def export_data(self) -> dict:
+        pass
 
-    def pet(self):
-        print("rrrrrrr 😸")
+class Book(Item):
+    def __init__(self, title: str, price: float) -> None:
+        self.title = title
+        self.price = price
 
-class Dog:
-    def feed(self, food: Food):
-        if food == "meat" or food == "vegetables":
-            print("dog ate the food 🐶")
+    def get_discounted_price(self):
+        return self.price * 0.85
+    
+    def export_data(self):
+        return { "title": self.title, "price": self.price}
 
-    def pet(self):
-        print("Hooooonk-sigh 🐾")
+class Food(Item):
+    def __init__(self, name: str, expiry_date: date, price: float) -> None:
+        self.name = name
+        self.expiry_date = expiry_date
+        self.price = price
 
-class Hamster:
-    def feed(self, food: Food):
-        if food == "seeds" or food == "vegetables":
-            print("hamster ate the food 🌿")
+    def get_discounted_price(self):
+        return self.price
 
-    def pet(self):
-        print("Whirrr 🐹")
+    def export_data(self):
+        return { "name": self.name, "expiry_date": self.expiry_date, "price": self.price}
+    
 
-class Fish:
-    def feed(self, food: Food):
-        if food == "fish food":
-            print("fish ate the food 🐟")
+class Electronics(Item):
+    def __init__(self, brand: str, price: float) -> None:
+        self.brand = brand
+        self.price = price
 
-    def pet(self):
-        print("blub blub 💧")
+    def get_discounted_price(self):
+        return self.price * 0.90
+    
+    def export_data(self):
+        return { "brand": self.brand, "price": self.price}
+
+
+items: list[Item] = [
+    Book("Harry Potter", 20),
+    Food("Milk", date.today(), 1.45),
+    Electronics("Samsung", 150)
+]
+
+print("===DISCOUNTED PRICES===")
+for item in items:
+    discounted_price = item.get_discounted_price()
+    print(f"discounted price: {discounted_price}")
+
+print("===PRODUCTS EXPORT===")
+for item in items:
+    print(item.export_data())
