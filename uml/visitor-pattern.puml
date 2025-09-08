@@ -1,0 +1,48 @@
+@startuml VisitorPattern
+title Visitor Pattern — Class Diagram
+
+skinparam classAttributeIconSize 0
+
+interface Visitor {
+  +visitConcreteElementA(e: ConcreteElementA)
+  +visitConcreteElementB(e: ConcreteElementB)
+}
+
+interface Element {
+  +accept(v: Visitor)
+}
+
+class ConcreteVisitor1 {
+    +visitConcreteElementA(e: ConcreteElementA)
+    +visitConcreteElementB(e: ConcreteElementB)
+}
+class ConcreteVisitor2 {
+    +visitConcreteElementA(e: ConcreteElementA)
+    +visitConcreteElementB(e: ConcreteElementB)
+}
+
+class ConcreteElementA {
+  +accept(v: Visitor)
+}
+
+class ConcreteElementB {
+  +accept(v: Visitor)
+}
+
+class ObjectStructure {
+  -elements: List<Element>
+  +doStuff()
+}
+
+Visitor <|.. ConcreteVisitor1
+Visitor <|.. ConcreteVisitor2
+
+Element <|.. ConcreteElementA
+Element <|.. ConcreteElementB
+
+ObjectStructure o-- "1..*" Element : contains
+
+Element --> Visitor : accept(v)
+ConcreteElementA ..> Visitor : visitConcreteElementA(this)
+ConcreteElementB ..> Visitor : visitConcreteElementB(this)
+@enduml
