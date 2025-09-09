@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from datetime import date
+from typing import List
 
 
 class Item(ABC):
@@ -47,7 +48,7 @@ class Electronics(Item):
         return { "brand": self.brand, "price": self.price}
 
 
-items: list[Item] = [
+items: List[Item] = [
     Book("Harry Potter", 20),
     Food("Milk", date.today(), 1.45),
     Electronics("Samsung", 150)
