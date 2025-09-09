@@ -1,10 +1,10 @@
-abstract class Item {
-    abstract getDiscountedPrice(): number;
-    abstract exportData(): any; // we don't know the exact return type
+interface Item {
+    getDiscountedPrice(): number;
+    exportData(): object;
 }
 
-class Book extends Item {
-    constructor(public title: string, public price: number) { super(); }
+class Book implements Item {
+    constructor(public title: string, public price: number) { }
 
     getDiscountedPrice() {
         return this.price * 0.85;
@@ -15,8 +15,8 @@ class Book extends Item {
     }
 }
 
-class Food extends Item {
-    constructor(public name: string, public expiryDate: Date, public price: number) { super(); }
+class Food implements Item {
+    constructor(public name: string, public expiryDate: Date, public price: number) { }
 
     getDiscountedPrice() {
         return this.price;
@@ -27,8 +27,8 @@ class Food extends Item {
     }
 }
 
-class Electronics extends Item {
-    constructor(public brand: string, public price: number) { super(); }
+class Electronics implements Item {
+    constructor(public brand: string, public price: number) { }
 
     getDiscountedPrice() {
         return this.price * 0.90;
